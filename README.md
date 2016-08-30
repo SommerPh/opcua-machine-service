@@ -1,5 +1,14 @@
 # OPC UA Kafka Service
-Usage coming soon
+
+####To use this application set environment variables:
+
+`set opcua.server=*your opc uaserver ip*`
+`set bootstrap.servers=*your kafka server ip*`
+
+and pass your json-File as command line argument
+
+####Format of .json:
+
 
 # License
 Copyright 2016 Timur Tasci, ISW Uni Stuttgart

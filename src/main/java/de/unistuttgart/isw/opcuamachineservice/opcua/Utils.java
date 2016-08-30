@@ -8,5 +8,5 @@ package de.unistuttgart.isw.opcuamachineservice.opcua;
  * @copyright Timur Tasci, ISW Uni Stuttgart
  */
 class Utils {
-    static String OPC_UA_SERVER_ADRESS = "opc_ua_server";
+    static String OPC_UA_SERVER_ADRESS = "opcua.server";
 }
