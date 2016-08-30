@@ -3,23 +3,18 @@ package de.unistuttgart.isw.opcuamachineservice;
 import com.siemens.ct.exi.exceptions.EXIException;
 import de.unistuttgart.isw.opcuamachineservice.opcua.Subscriptions;
 import de.unistuttgart.isw.opcuamachineservice.utils.Json2NodeId;
-
 import de.unistuttgart.isw.opcuamachineservice.utils.KafkaHelper;
 import de.unistuttgart.isw.opcuamachineservice.utils.XMLHelper;
 import de.unistuttgart.isw.serviceorchestration.servicecore.MessageBus;
 import de.unistuttgart.isw.serviceorchestration.servicecore.MessageSender;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.opcfoundation.ua.builtintypes.DataValue;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * @author Timur Tasci
