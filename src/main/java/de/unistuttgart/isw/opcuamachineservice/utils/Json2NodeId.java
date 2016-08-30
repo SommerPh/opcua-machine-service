@@ -15,6 +15,12 @@ import java.io.FileReader;
  */
 public class Json2NodeId {
 
+    /**
+     * Creates an array of NodeIds for a given .json file
+     * @param file must be a json file
+     * @return array of NodeIds
+     * @throws Exception
+     */
     public static NodeId[] json2NodeId(File file) throws Exception {
         JsonReader jsonReader = new JsonReader(new FileReader(file));
         Gson gson = new Gson();
