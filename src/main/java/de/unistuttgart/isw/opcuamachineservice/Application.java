@@ -24,21 +24,25 @@ import java.util.Map;
  */
 public class Application {
     public static void main(String[] args) throws Exception {
-        System.setProperty("http.agent", "Mozilla/5.0");
-        Subscriptions subscriptions = new Subscriptions();
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        NodeId[] ids = Json2NodeId.json2NodeId(new File(classLoader.getResource("subscribeItems.json").getFile()));
-        List<UaMonitoredItem> itemList = subscriptions.createMonitoredItemsFromNodes(ids).get();
-        MessageBus bus = new MessageBus();
-        Map<String,MessageSender> messageSenders = KafkaHelper.creadeSendersFromIds(ids, bus);
-        for (UaMonitoredItem item : itemList)
-            item.setValueConsumer((uaMonitoredItemitem, value) -> {
-                try {
-                    messageSenders.get(uaMonitoredItemitem.getReadValueId().getNodeId().getIdentifier().toString()).send(XMLHelper.createXML(value));
-                } catch (IOException | SAXException | EXIException e) {
-                    e.printStackTrace();
-                }
-            });
+        if(args.length > 0){
+            File file = new File(args[0]);
+            System.setProperty("http.agent", "Mozilla/5.0");
+            Subscriptions subscriptions = new Subscriptions();
+            NodeId[] ids = Json2NodeId.json2NodeId(file);
+            List<UaMonitoredItem> itemList = subscriptions.createMonitoredItemsFromNodes(ids).get();
+            MessageBus bus = new MessageBus();
+            Map<String,MessageSender> messageSenders = KafkaHelper.creadeSendersFromIds(ids, bus);
+            for (UaMonitoredItem item : itemList)
+                item.setValueConsumer((uaMonitoredItemitem, value) -> {
+                    try {
+                        messageSenders.get(uaMonitoredItemitem.getReadValueId().getNodeId().getIdentifier().toString()).send(XMLHelper.createXML(value));
+                    } catch (IOException | SAXException | EXIException e) {
+                        e.printStackTrace();
+                    }
+                });
+        }else{
+            System.out.print("Pls pass a path to your Json File");
+        }
         while (true);
     }
 }
