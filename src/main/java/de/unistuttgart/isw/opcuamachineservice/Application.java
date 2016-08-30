@@ -40,9 +40,9 @@ public class Application {
                         e.printStackTrace();
                     }
                 });
+            while (true);
         }else{
             System.out.print("Pls pass a path to your Json File");
         }
-        while (true);
     }
 }
