@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Helper class for all Kafka related methods.
+ *
  * @author Timur Tasci
  * @version 1.0
  * @date 29.08.2016
@@ -15,6 +17,12 @@ import java.util.Map;
  */
 public class KafkaHelper {
 
+    /**
+     * Creates kafka producers based on provided NodeIds. Note that all "," will replaced with "."
+     * @param ids
+     * @param bus
+     * @return producers
+     */
     public static Map<String,MessageSender> creadeSendersFromIds(NodeId[] ids, MessageBus bus){
         Map<String,MessageSender> messageSenders = new HashMap<>();
         for (NodeId id : ids){
