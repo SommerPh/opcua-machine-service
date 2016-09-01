@@ -7,6 +7,8 @@ import de.unistuttgart.isw.opcuamachineservice.utils.KafkaHelper;
 import de.unistuttgart.isw.opcuamachineservice.utils.XMLHelper;
 import de.unistuttgart.isw.serviceorchestration.servicecore.MessageBus;
 import de.unistuttgart.isw.serviceorchestration.servicecore.MessageSender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.xml.sax.SAXException;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 public class Application {
     public static void main(String[] args) throws Exception {
+        final Logger logger = LogManager.getLogger("Application");
         if(args.length > 0){
             File file = new File(args[0]);
             System.setProperty("http.agent", "Mozilla/5.0");
@@ -32,17 +35,22 @@ public class Application {
             List<UaMonitoredItem> itemList = subscriptions.createMonitoredItemsFromNodes(ids).get();
             MessageBus bus = new MessageBus();
             Map<String,MessageSender> messageSenders = KafkaHelper.creadeSendersFromIds(ids, bus);
-            for (UaMonitoredItem item : itemList)
+            for (UaMonitoredItem item : itemList) {
                 item.setValueConsumer((uaMonitoredItemitem, value) -> {
+                    String id = uaMonitoredItemitem.getReadValueId().getNodeId().getIdentifier().toString();
                     try {
-                        messageSenders.get(uaMonitoredItemitem.getReadValueId().getNodeId().getIdentifier().toString()).send(XMLHelper.createXML(value));
+                        messageSenders.get(id).send(XMLHelper.createXML(value));
+                        logger.info("Message send for Node: " + id);
                     } catch (IOException | SAXException | EXIException e) {
+                        logger.error("Could nod send Message for Node: " + id);
                         e.printStackTrace();
                     }
                 });
+                logger.info("Created Listener for MonitoredItem: " + item.getReadValueId().getNodeId().getIdentifier().toString());
+            }
             while (true);
         }else{
-            System.out.print("Pls pass a path to your Json File");
+            logger.error("Please provide a valid json-Filepath as command line argument");
         }
     }
 }

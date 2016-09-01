@@ -1,5 +1,7 @@
 package de.unistuttgart.isw.opcuamachineservice.opcua;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaSubscription;
 import org.eclipse.milo.opcua.stack.core.AttributeId;
@@ -29,6 +31,7 @@ import static org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.Unsigned.
 public class Subscriptions {
 
     private final AtomicLong clientHandles = new AtomicLong(1L);
+    private static final Logger logger = LogManager.getLogger("Subscriptions");
 
     public Subscriptions(){
 
@@ -54,7 +57,7 @@ public class Subscriptions {
                     true);       // discard oldest
             request.add(new MonitoredItemCreateRequest(
                     readValueId, MonitoringMode.Reporting, parameters));
-
+            logger.info("Created subscription for " + nodeIds[i].getIdentifier().toString());
         }
         return subscription.createMonitoredItems(TimestampsToReturn.Both, request);
     }
