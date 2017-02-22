@@ -37,7 +37,7 @@ public class ClientManager {
                     .build();
             client = new OpcUaClient(clientConfig);
             client.connect();
-            logger.info("Connection established! OPC UA Adress : " + System.getenv(OPC_UA_SERVER_ADRESS));
+            logger.info("Connection established! OPC UA Address : " + System.getenv(OPC_UA_SERVER_ADRESS));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,1 +1,1 @@
-[{"namespaceIndex":{"value":27},"identifier":"NC.Chan.AxisPosAcsCoupl,01,1"}, {"namespaceIndex":{"value":27},"identifier":"NC.Chan.ActSpindleSpeed,01,Speed"}]
+[{"namespaceIndex":{"value":27},"identifier":"NC.Chan.AxisPosAcsCoupl,01,1"}, {"namespaceIndex":{"value":27},"identifier":"NC.Chan.ActFeedrate,01"}]
